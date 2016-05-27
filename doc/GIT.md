@@ -8,5 +8,5 @@ This is the more complex way to make contributions to this game; however, it is 
 6. Run `git add *` to add all changes you have made to the game.
 7. Run `git commit -m "Your commit message"` To make a 'commit'. A commit is basically a way for Git to track changes to your changes.
 8. Run `git push origin master` to send those changes to YOUR repository. You will need to enter your github username and password.
-9. Now you can either go back to step #5 and make more changes, or if you are ready to submit those changes, you can go to your repository in your web browser and click 'send pull request' to the main repository.
+9. Now you can either go back to step #5 and make more changes, or if you are ready to submit those changes, you can go to your repository in your web browser and click 'Make new pull request' to the main repository.
 10. Go back to step #5 and make more changes.
