@@ -3,7 +3,7 @@ This is the more complex way to make contributions to this game; however, it is 
 1. Download [Git](https://git-scm.com/)
 2. Create a github account
 3. Fork this repository using the 'fork' button in the upper right.
-4. In git, run `git clone {repository}`. the '{repository}' should be replaced with the url of your repository, which in most cases, should be 'https://github.com/{Yourusername}/RunouwGameProject.git'. If this is not it, then click the 'clone or download' button on YOUR repository and copy the url that shows up. Do NOT download as a zip.
+4. In git, run `git clone {repository}`. the '{repository}' should be replaced with the url of your repository, which in most cases, should be 'https://github.com/{YourUsername}/RunouwGameProject.git'. If this is not it, then click the 'clone or download' button on YOUR repository and copy the url that shows up. Do NOT download as a zip.
 5. Make changes to the game. This can be anything, like editing levels, creating levels, adding graphics, etc.
 6. Run `git add *` to add all changes you have made to the game.
 7. Run `git commit -m "Your commit message"` To make a 'commit'. A commit is basically a way for Git to track changes to your changes.
