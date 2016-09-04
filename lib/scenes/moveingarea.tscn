@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 32, 32 )
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "\nextends Area2D\n\nonready var prev_pos = get_global_pos();\nvar body_refs = []\nvar body_exceptions = []\n\nfunc _kpusher_push(delta):\n\tvar new_pos = get_global_pos();\n\tvar diff = (new_pos - prev_pos)\n\t\n\tif new_pos != prev_pos:\n\t\tfor body in body_refs:\n\t\t\tif body != get_parent() and not body in body_exceptions:\n\t\t\t\tkpusher.push_object(get_parent(), body, diff);\n\t\t\n\tprev_pos = new_pos;\n\nfunc _ready():\n\tkpusher.connect(\"kpusher_push\", self, \"_kpusher_push\");\n#\tset_fixed_process(true);\n\nfunc _on_MovingArea_body_enter( body ):\n\tif not body extends KinematicBody2D:\n\t\treturn\n\tbody_refs.append(body);\n\tprint(\"ADDED\");\n\nfunc _on_MovingArea_body_exit( body ):\n\tif not body extends KinematicBody2D:\n\t\treturn\n\tbody_refs.erase(body);\n\tprint(\"REMOVED\");\n\n\nfunc _on_IgnoreArea_body_enter( body ):\n\tif not body extends KinematicBody2D:\n\t\treturn\n\tbody_exceptions.append(body);\n\nfunc _on_IgnoreArea_body_exit( body ):\n\tif not body extends KinematicBody2D:\n\t\treturn\n\tbody_exceptions.erase(body);\n"
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 33, 13 )
+
+[node name="MovingArea" type="Area2D"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="IgnoreArea" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 20 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IgnoreArea"]
+
+transform/pos = Vector2( 0, 20 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="." to="." method="_on_MovingArea_body_enter"]
+
+[connection signal="body_exit" from="." to="." method="_on_MovingArea_body_exit"]
+
+[connection signal="body_enter" from="IgnoreArea" to="." method="_on_IgnoreArea_body_enter"]
+
+[connection signal="body_exit" from="IgnoreArea" to="." method="_on_IgnoreArea_body_exit"]
+
+
